@@ -1,12 +1,11 @@
 <?php
 class controler{
-    private $rout = ['user/5' => ['controler']];
-    private static $request = null;
+    protected static $request = null;
     public static function __callStatic($name, $arguments){
-        static::$request = $arguments;
-        return static::$name($arguments);
+        static::$request = explode(',' , $arguments[0]);
+        return static::$name(static::$request);
     }
     private static function controler(array $requests){
-        return (new $requests[0][0]) -> show($requests[0][1]);
+        return (new ($requests[0] .'Controler')) -> show($requests[0]);
     }
 }

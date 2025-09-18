@@ -1,22 +1,38 @@
 <?php
 
 class executionRequest{
-    protected $arrayInParsURIToPerform =      null;
+    protected $arrayInParsedURI =             null;
+
+    public function web(){ 
+        return include('web.php'); 
+    }
+
+    private function routeDesignator(){
+        $Route = $this -> web();
+        unset($this -> arrayInParsedURI[0] , $this -> arrayInParsedURI[1]);
+        $this -> arrayInParsedURI = array_values($this -> arrayInParsedURI);
+        foreach ($Route as $key => $value) {
+            if ($this -> arrayInParsedURI[0] == $key) {
+                return $value;
+                // اگه مثلا کار بر از طریق url درخواست دومی داده باشه یعنی localhost/testMVC/user,5/category,3 اونجا باید چیکار کنم؟
+            }
+        }
+
+    }
+    
     protected function parsURIToPerform(){
-        $this -> arrayInParsURIToPerform = $this -> explode(',', $arrayInParsedURI[2]);
-        $arrayInReturnedControler = controler::controler($this -> arrayInParsURIToPerform);
-        
+        $arrayInReturnedControler = controler::controler($this -> routeDesignator());
     }
 }
 class router extends executionRequest{
-    private $arrayInParsedURI =             null;
-
-    // $this -> arrayInParsedURI = 'localhost/testMVC/user,5'; 
-    public function __construct(){
-        $this -> arrayInParsedURI = explode('/', $_SERVER['REQUEST_URI']);
-        $this -> parsURIToPerform();
+    public static function get(){
+        $thiss = (new static());
+        $thiss -> parsUrl();
+        $thiss -> parsURIToPerform();
     }
-
+    public function parsUrl(){
+        $this -> arrayInParsedURI = explode('/' , $_SERVER['REQUEST_URI']);
+    }
 }
 
 

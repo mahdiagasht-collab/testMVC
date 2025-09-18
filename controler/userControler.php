@@ -1,7 +1,15 @@
 <?php
 class userControler extends controler
 {
-    protected function show(string $id){
-        return ['className' => 'modelUser' ,'method' => 'find' , 'value' => $id];
+    private function modelSpecifier(){
+        return new (static::$request[0] . 'Model');
+    }
+    protected function show($value){
+        $this -> modelSpecifier();
+        var_dump(static::$request);
+        echo '👍';
+        die();
+
+        // return ['className' => 'modelUser' ,'method' => 'find' , 'value' => $value];
     }
 }
