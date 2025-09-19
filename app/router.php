@@ -8,30 +8,31 @@ class executionRequest{
     }
 
     private function routeDesignator(){
+        
         $Route = $this -> web();
+
         unset($this -> arrayInParsedURI[0] , $this -> arrayInParsedURI[1]);
         $this -> arrayInParsedURI = array_values($this -> arrayInParsedURI);
-        foreach ($Route as $key => $value) {
-            if ($this -> arrayInParsedURI[0] == $key) {
-                return $value;
-                // اگه مثلا کار بر از طریق url درخواست دومی داده باشه یعنی localhost/testMVC/user,5/category,3 اونجا باید چیکار کنم؟
-            }
-        }
 
+        $requestText = implode('/' , $this -> arrayInParsedURI);
+
+        return $Route[$requestText];        
     }
     
-    protected function parsURIToPerform(){
-        $arrayInReturnedControler = controler::controler($this -> routeDesignator());
+    protected function perform(){
+        $rout = $this -> routeDesignator();
+        $rout[0]::{$rout[1]}($this -> arrayInParsedURI , $rout);
     }
 }
+
 class router extends executionRequest{
+    public function parsUrl(){
+        $this -> arrayInParsedURI = explode('/' , $_SERVER['REQUEST_URI']);
+    }
     public static function get(){
         $thiss = (new static());
         $thiss -> parsUrl();
-        $thiss -> parsURIToPerform();
-    }
-    public function parsUrl(){
-        $this -> arrayInParsedURI = explode('/' , $_SERVER['REQUEST_URI']);
+        $thiss -> perform();
     }
 }
 

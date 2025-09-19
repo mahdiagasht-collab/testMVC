@@ -1,15 +1,13 @@
 <?php
 class userControler extends controler
 {
-    private function modelSpecifier(){
-        return new (static::$request[0] . 'Model');
-    }
     protected function show($value){
-        $this -> modelSpecifier();
-        var_dump(static::$request);
+        $result = ('Model' . static::$request[0] )::find(static::$request[1]);
+
+        // include ('../view' . static::$request[0] . '.php');
+
+        var_dump(loadFile::loadFile('view' . static::$request[0]));
         echo '👍';
         die();
-
-        // return ['className' => 'modelUser' ,'method' => 'find' , 'value' => $value];
     }
 }

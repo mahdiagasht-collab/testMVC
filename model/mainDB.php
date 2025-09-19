@@ -1,14 +1,15 @@
 <?php
 class mainDB
 {
-    protected function __construct()
-    {
-        $this ->connection = new mysqli('localhost','root','','ecommerce');
+    protected $connection;
+
+    public function __construct(){
+        $this -> connection = new mysqli('localhost','root','','ecommerce');
     }
-    protected function sendQuery(string $query){
+    protected function sendQuery($query){
         echo '<br>';
         echo $query;
         echo '<br>';
-        $this -> connection -> query($query);
+        return $this -> connection -> query($query);
     }
 }

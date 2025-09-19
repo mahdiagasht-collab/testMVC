@@ -1,4 +1,4 @@
 <?php
 return [
-    'user,5' => ['userControler' , 'show']
+    'User/5' => ['userControler' , 'show']
 ];
