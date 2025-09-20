@@ -1,4 +1,5 @@
 <?php
+// var_dump($result);
 foreach ($result as $key => $value) {
     echo $value['id'];
     echo '<br>';

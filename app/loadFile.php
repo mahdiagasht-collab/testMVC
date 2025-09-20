@@ -20,8 +20,8 @@ class loadFile
                 } else{
                     $addres = 'view/' . $fileName . '.php';
                     if (file_exists($addres)){
-                        return include $addres;
-                        true;
+                        return $addres;
+                        // true;
                     } else{
                         include 'view/404.php';
                     }
