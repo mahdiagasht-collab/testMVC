@@ -1,6 +1,8 @@
 <?php
 return [
-    'User/{id}' => ['userControler' , 'show']
+    'User/{id}' => ['userControler' , 'show'],
+    // 'User/update/{id}' => ['userControler' , 'update'],
+    // '{id}/User/update' => ['userControler' , 'update']
 ];
 
 

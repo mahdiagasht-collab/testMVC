@@ -3,15 +3,14 @@ class router{ // روتر نباید extends کند
     private $request = null;
     public function takingRequests(){
         // آبجکت از کلاس ریکوئست باید داشته باشم
-        return $this -> request = request::get();
+        $this -> request = request::get();
     }
     private function perform(){
-        $rout = $this -> takingRequests();
+        $this -> takingRequests();
         echo 'rout : ';
-        var_dump($rout);
+        print_r($this -> request);
         echo '<br>';
-        var_dump($this -> arrayInParsedURI);
-        $rout[0]::{$rout[1]}($rout);
+        $this -> request[0][0]::{$this -> request[0][1]}($this -> request[1]);
     }
     public static function get(){
         (new (static::class)) -> perform();

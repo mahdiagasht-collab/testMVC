@@ -41,7 +41,7 @@ class model extends modelFesade
         return $this;
     }
     protected function find(array $colomnInQuestion){//$id
-        // $this;
+        // print_r($value);
         return $this -> connection -> query('SELECT * FROM ' . static::$table . ' WHERE id = ' . $colomnInQuestion[0]);
     }
     protected function delete(array $colomnInQuestion){

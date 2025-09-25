@@ -2,18 +2,21 @@
 class userControler extends controler
 {
     
-    protected function show($value){
-        
-        $result = ('Model' . static::$request[0] )::find(static::$request[1]);
+    protected function show(array $value){
+        echo '<br>';
+        echo 'eeee : ';
+        print_r($value[0]['id']);
+        echo '<br>';
+        $result = modelUser::find($value[0]['id']);
 
+        echo '👍';
+        // die();
         // include ('view' . static::$request[0] . '.php');
         echo 'view/viewUser.php -> ';
         echo '<br>';
-        $addres = loadFile::loadFile('view' . static::$request[0]);
+        $addres = loadFile::loadFile('viewUser');
         include($addres);
         // include('testAddres.php');
         // var_dump();
-        echo '👍';
-        die();
     }
 }

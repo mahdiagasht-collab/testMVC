@@ -1,8 +1,8 @@
 <?php
 
 class request{
-    private $arrayInParsedURI = null;
-    public $request =           null;
+    private $arrayInParsedURI =             null;
+    private $requestAndRequestValue =       null;
     private function __construct()
     {
         $this -> captureRequest();
@@ -12,7 +12,7 @@ class request{
         return (static::class)::$name($arguments);
     }
     private static function get(array $array){
-        return (new (static::class)) -> request;
+        return (new (static::class)) -> requestAndRequestValue;
     }
     private function web(){ 
         return include('web.php'); 
@@ -22,8 +22,26 @@ class request{
         return array_values($this -> arrayInParsedURI);
     }
     private function routeDesignator(){
-        
-        // $this -> request = $this -> web()[implode('/' , $this -> arraySorter())];        
+        $routs = $this -> web();
+        $request = $this -> arraySorter();
+
+        foreach ($routs as $key => $value) {
+            $routArray = explode("/" , $key);
+            
+            for ($i=0; $i < count($request); $i++) { 
+                if (str_contains($routArray[$i] , "{")){
+                    $defaultVariable = $routArray[$i];
+                    $routArray[$i] = $request[$i];
+                    if ($request == $routArray) {
+                        $variableValueInTheRoute = [rtrim(ltrim($defaultVariable , "{") , "}") => $request[$i]];
+                        
+                        $routArray[$i] = $defaultVariable;
+                        $this -> requestAndRequestValue = [$routs[implode('/' , $routArray)] , $variableValueInTheRoute];
+                    }
+                }
+            }
+        }  
+        // die();
     }
     
     private function captureRequest(){
