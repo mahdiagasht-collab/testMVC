@@ -1,7 +1,9 @@
 <?php
 return [
-    'User/5' => ['userControler' , 'show']
+    'User/{id}' => ['userControler' , 'show']
 ];
+
+
 
 // router::get([
 //     'User/5' => ['userControler' , 'show']

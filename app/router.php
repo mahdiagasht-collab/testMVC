@@ -1,38 +1,22 @@
 <?php
-
-class executionRequest{
-    protected $arrayInParsedURI =             null;
-
-    public function web(){ 
-        return include('web.php'); 
+class router{ // روتر نباید extends کند
+    private $request = null;
+    public function takingRequests(){
+        // آبجکت از کلاس ریکوئست باید داشته باشم
+        return $this -> request = request::get();
     }
-
-    private function routeDesignator(){
-        
-        $Route = $this -> web();
-
-        unset($this -> arrayInParsedURI[0] , $this -> arrayInParsedURI[1]);
-        $this -> arrayInParsedURI = array_values($this -> arrayInParsedURI);
-
-        $requestText = implode('/' , $this -> arrayInParsedURI);
-
-        return $Route[$requestText];        
-    }
-    
-    protected function perform(){
-        $rout = $this -> routeDesignator();
-        $rout[0]::{$rout[1]}($this -> arrayInParsedURI , $rout);
-    }
-}
-
-class router extends executionRequest{
-    public function parsUrl(){
-        $this -> arrayInParsedURI = explode('/' , $_SERVER['REQUEST_URI']);
+    private function perform(){
+        $rout = $this -> takingRequests();
+        echo 'rout : ';
+        var_dump($rout);
+        echo '<br>';
+        var_dump($this -> arrayInParsedURI);
+        $rout[0]::{$rout[1]}($rout);
     }
     public static function get(){
-        $thiss = (new static());
-        $thiss -> parsUrl();
-        $thiss -> perform();
+        (new (static::class)) -> perform();
+        // $thiss -> captureRequest();
+        // $thiss;
     }
 }
 

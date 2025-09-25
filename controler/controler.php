@@ -7,6 +7,8 @@ class controler{
         // static::$request = explode(',' , $arguments[0]);
         // return static::$name(static::$request);
         echo '<br>';
+        echo '<br>';
+        echo '<br>';
         echo 'request : ';
         var_dump($arguments[0]);
         echo '<br>';
