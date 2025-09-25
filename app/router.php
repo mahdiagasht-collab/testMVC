@@ -7,9 +7,6 @@ class router{ // روتر نباید extends کند
     }
     private function perform(){
         $this -> takingRequests();
-        echo 'rout : ';
-        print_r($this -> request);
-        echo '<br>';
         $this -> request[0][0]::{$this -> request[0][1]}($this -> request[1]);
     }
     public static function get(){

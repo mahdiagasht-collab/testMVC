@@ -1,7 +1,7 @@
 <?php
 class loadFile
 {
-    public static function loadFile(string $fileName)
+    public static function loadFile(string $fileName , array $result)
     {
         $addres = 'app/' . $fileName . '.php';
         if (file_exists($addres)){
@@ -20,8 +20,8 @@ class loadFile
                 } else{
                     $addres = 'view/' . $fileName . '.php';
                     if (file_exists($addres)){
-                        return $addres;
-                        // true;
+                        include $addres;
+                        return true;
                     } else{
                         include 'view/404.php';
                     }

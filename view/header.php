@@ -6,13 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
-        <a href="#">لیست محصولات</a>
-        <a href="#">اضافه کردن محصول</a>
+    <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    ">
+        <div style="
+        background-color:       bisque;
+        margin:                 10px;
+        padding:                10px;
+        border-radius:          10px;
+        display:                flex;
+        justify-content:        space-evenly;">
+            <a href="#" style="text-decoration: none;">لیست محصولات</a>
+            <a href="#" style="text-decoration: none;">اضافه کردن محصول</a>
 
-        <a href="#">لیست دسته بندی ها</a>
-        <a href="#">اضافه کردن دسته بندی</a>
+            <a href="#" style="text-decoration: none;">لیست دسته بندی ها</a>
+            <a href="#" style="text-decoration: none;">اضافه کردن دسته بندی</a>
 
-        <a href="#">لیست کاربران</a>
-        <a href="#">ثبتنام کاربر</a>
-    </div>
+            <a href="#" style="text-decoration: none;">لیست کاربران</a>
+            <a href="#" style="text-decoration: none;">ثبتنام کاربر</a>
+        </div>

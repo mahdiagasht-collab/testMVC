@@ -25,7 +25,10 @@ class request{
         $routs = $this -> web();
         $request = $this -> arraySorter();
 
-        foreach ($routs as $key => $value) {
+        var_dump($request);
+        die();
+
+        foreach ($routs as $key => $route) {
             $routArray = explode("/" , $key);
             
             for ($i=0; $i < count($request); $i++) { 
@@ -41,7 +44,6 @@ class request{
                 }
             }
         }  
-        // die();
     }
     
     private function captureRequest(){
