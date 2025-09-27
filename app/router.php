@@ -1,18 +1,46 @@
 <?php
-class router{ // روتر نباید extends کند
-    private $request = null;
-    public function takingRequests(){
-        // آبجکت از کلاس ریکوئست باید داشته باشم
-        $this -> request = request::get();
+class router{ // روتر نباید extends کند // مسیر یاب
+    // private $request = null; // این رو کامنت کردم چون از طریق آبجکت ریکوئست بهش توی آبجکتش دسترسی دارم
+    public static request $objAppRequest;
+    
+    public $route =  null;
+
+    private function __construct(){
+        static::$objAppRequest = request::getUserRequest($this);
     }
-    private function perform(){
-        $this -> takingRequests();
-        $this -> request[0][0]::{$this -> request[0][1]}($this -> request[1]);
+
+
+    // این متد وب باید در کلاس دیگه ای باشه
+    private function web(){ 
+        return [
+            'User/{id}' => ['userControler' , 'show'],
+            "{id}/User" => ['userControler' , 'test']
+            // 'User/update/{id}' => ['userControler' , 'update'],
+            // '{id}/User/update' => ['userControler' , 'update']
+        ];
     }
+
+    private function routeDesignator(array $request){
+        $routs = $this -> web();
+        foreach ($routs as $key => $route) {
+            $routArray = explode("/" , $key);
+            
+            for ($i=0; $i < count($request); $i++) { 
+                if (str_contains($routArray[$i] , "{")){
+                    $routArray[$i] = $request[$i];
+                    if ($request == $routArray) {
+                        static::$objAppRequest -> requestValue = [$request[$i]];
+                        $this -> route = $route;
+                    }
+                }
+            }
+        }  
+    }
+
+    // ---------------------------------------------------------
+    
     public static function get(){
-        (new (static::class)) -> perform();
-        // $thiss -> captureRequest();
-        // $thiss;
+        (new (static::class)) -> routeDesignator(static::$objAppRequest -> request);
     }
 }
 

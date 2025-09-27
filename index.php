@@ -15,6 +15,7 @@ include('app/autoload.php');
 // در روتر باید مسیری که روتر باید اجرا کنه هم مشخص بشه ولی هنوز به اون رسیدگی نمیکنیم
 
 router::get();
+request::get();
 
 
 //captureRequest()

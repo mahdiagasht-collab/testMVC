@@ -1,52 +1,75 @@
 <?php
-
 class request{
-    private $arrayInParsedURI =             null;
-    private $requestAndRequestValue =       null;
-    private function __construct()
+    // private $arrayInParsedURI =             null;
+    // private $requestAndRequestValue =       null;
+
+    public  $request =                      null;
+    public  $requestValue =                      null;
+
+    private static router $objAppRouter;
+
+    private function __construct(router $objAppRouter)
     {
-        $this -> captureRequest();
-        $this -> routeDesignator();
-    }
-    public static function __callStatic($name, $arguments){
-        return (static::class)::$name($arguments);
-    }
-    private static function get(array $array){
-        return (new (static::class)) -> requestAndRequestValue;
-    }
-    private function web(){ 
-        return include('web.php'); 
-    }
-    private function arraySorter(){
-        unset($this -> arrayInParsedURI[0] , $this -> arrayInParsedURI[1]);
-        return array_values($this -> arrayInParsedURI);
-    }
-    private function routeDesignator(){
-        $routs = $this -> web();
-        $request = $this -> arraySorter();
+        // $this -> requestSpecifier();
+        // $this -> routeDesignator();
 
-        var_dump($request);
-        die();
+        static::$objAppRouter = $objAppRouter;
+    }
+    // public static function __callStatic($name, $arguments){
+    //     return (static::class)::$name($arguments);
+    // }
+    // public static function get(){
+    //     return (new (static::class)) -> requestAndRequestValue;
+    // }
 
-        foreach ($routs as $key => $route) {
-            $routArray = explode("/" , $key);
-            
-            for ($i=0; $i < count($request); $i++) { 
-                if (str_contains($routArray[$i] , "{")){
-                    $defaultVariable = $routArray[$i];
-                    $routArray[$i] = $request[$i];
-                    if ($request == $routArray) {
-                        $variableValueInTheRoute = [rtrim(ltrim($defaultVariable , "{") , "}") => $request[$i]];
-                        
-                        $routArray[$i] = $defaultVariable;
-                        $this -> requestAndRequestValue = [$routs[implode('/' , $routArray)] , $variableValueInTheRoute];
-                    }
-                }
-            }
-        }  
+    // ---------------------------------------------------
+    
+    // private function arraySorter(){
+    // }
+    // private function captureURL(){
+    //     return ;
+    // }
+
+    private function captureRequest(){
+        $urlArray = explode('/' , $_SERVER['REQUEST_URI']);
+        
+        unset($urlArray[0] , $urlArray[1]);
+        $this -> request = array_values($urlArray);
+
+        return $this;
+    }
+
+    // ---------------------------------------------------
+    
+    private function requestSpecifier(){
+        $arrayInParsedURI = $this -> captureRequest();
+        unset($arrayInParsedURI[0] , $arrayInParsedURI[1]);
+        
     }
     
-    private function captureRequest(){
-        $this -> arrayInParsedURI = explode('/' , $_SERVER['REQUEST_URI']);
+    // ---------------------------------------------------
+    
+    
+    
+    private function perform(){
+        // $this -> takingRequests();
+        $this -> request[0][0]::{$this -> request[0][1]}($this -> request[1]);
     }
+    
+    
+    // ---------------------------------------------------
+    // ---------------------------------------------------
+    
+    public static function getUserRequest(router $objAppRouter){
+        return (new (static::class)($objAppRouter)) -> captureRequest();
+    }
+    
+    // ---------------------------------------------------
+    // ---------------------------------------------------
+
+
+    public static function get(){
+        factory::factory(static::$objAppRouter -> route[0]) -> {static::$objAppRouter -> route[1]}(router::$objAppRequest -> requestValue);
+    }
+
 }
